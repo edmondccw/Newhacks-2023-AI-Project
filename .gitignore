@@ -1,0 +1,44 @@
+# Ignore Node.js modules for the React frontend
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# Ignore compiled TypeScript files
+frontend/src/**/*.js
+frontend/src/**/*.js.map
+
+# Ignore Python virtual environment (if used)
+.venv/
+
+# Ignore Flask-related files
+__pycache__/
+*.pyc
+
+# Ignore Flask database files (if applicable)
+backend/db.sqlite
+
+# Ignore Visual Studio Code specific files and directories
+.vscode/
+*.code-workspace
+
+# Ignore settings and workspace files
+settings.json
+*.code-workspace
+
+# Ignore User-specific settings
+.vscode/settings.json
+
+# Ignore window-specific files
+.vscode/*.json
+
+# Ignore editor history files
+.vscode/history.json
+
+# Ignore logs and temporary files
+logs/
+*.log
+
+# Add any other project-specific files or directories to ignore
+.env
+config.py
+instance/
