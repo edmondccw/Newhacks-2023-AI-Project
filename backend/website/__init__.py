@@ -1,15 +1,23 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from .config import Config
 
 db = SQLAlchemy()
+
 
 def create_app():
 
     # App config
     app = Flask(__name__)
     app.config.from_object(Config)
+
+    # Initialize CORS with default settings (allows all origins, headers, and methods)
+    cors = CORS(app)
+
+    # Custmize CORS setting (optional)
+    # cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
     # Import Blueprints
     # from .routes.apis import apis
@@ -20,7 +28,7 @@ def create_app():
 
     # Import db models
     from .models.users import User
-    
+
     # Init Database
     db.init_app(app)
 
@@ -35,6 +43,5 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
-
 
     return app

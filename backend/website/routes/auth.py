@@ -31,7 +31,6 @@ def login():
 @auth.post("/sign-up")
 def sign_up():
     data = request.get_json()
-    print(data)
 
     username = data["username"]
     email = data["email"]
@@ -57,7 +56,7 @@ def sign_up():
         db.session.commit()
         login_user(new_user, remember=True)
         print("Sign up success!")
-        return jsonify({'message': 'Signup successful'})
+        return jsonify({'message': 'Signup successful'}), 201
 
 
 @login_required
