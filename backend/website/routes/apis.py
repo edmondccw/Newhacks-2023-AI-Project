@@ -122,7 +122,10 @@ def questions():
 def question(id):
 
     question = Question.query.filter_by(id=id).first()
-    question_json = {'id': question.id, 'question_title': question.question_title,  'question_prompt': question.question_prompt,
+    if question:
+        question_json = {'id': question.id, 'question_title': question.question_title,  'question_prompt': question.question_prompt,
                      'question_code': question.question_code, 'answer_code': question.answer_code, 'answer_explanation': question.answer_explanation}
+    else:
+        return jsonify({"error": "Question doesn't exist"}), 400
 
     return jsonify(question_json)
