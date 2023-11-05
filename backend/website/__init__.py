@@ -24,7 +24,7 @@ def create_app():
     from .routes.auth import auth
 
     app.register_blueprint(apis, url_prefix="/api")
-    app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(auth, url_prefix="/api")
 
     # Import db models
     from .models.users import User
