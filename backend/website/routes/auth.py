@@ -7,9 +7,9 @@ from .. import db
 auth = Blueprint("auth", __name__)
 
 
-@auth.app_context_processor
-def inject_user():
-    return dict(user=current_user)
+# @auth.app_context_processor
+# def inject_user():
+#     return dict(user=current_user)
 
 
 @auth.post("/login")

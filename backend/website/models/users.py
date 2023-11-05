@@ -9,3 +9,4 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(10))
     password = db.Column(db.String(80))
     date_created = db.Column(db.DateTime, default = datetime.now())
+    questions = db.relationship("Question", backref="user", passive_deletes=True)

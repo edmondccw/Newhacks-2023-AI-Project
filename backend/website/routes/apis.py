@@ -1,7 +1,13 @@
 from flask import Blueprint, redirect, url_for, request, jsonify, json
-import g4f, re
+from flask_login import login_required, current_user
+from ..models.users import User
+from ..models.questions import Question
+from .. import db
+import g4f
+import re
 
 apis = Blueprint("apis", __name__)
+
 
 def run_gpt(prompt):
     response = g4f.ChatCompletion.create(
@@ -13,6 +19,7 @@ def run_gpt(prompt):
 
 
 @apis.post('/generate-question')
+@login_required
 def generation_question():
     data = request.get_json()
     language = data["language"]
@@ -34,7 +41,7 @@ def generation_question():
 
     if match is None:
         return jsonify({"error": "Please try again"}), 400
-    
+
     # Extract the data from the matched groups
     question_title = match.group(1).strip()
     question_prompt = match.group(2).strip()
@@ -50,11 +57,16 @@ def generation_question():
         "answer_explanation": answer_explanation
     }
 
+    question = Question(question_title=question_title, question_prompt=question_prompt, question_code=question_code,
+                        answer_code=answer_code, answer_explanation=answer_explanation, user_id=current_user.id)
+    db.session.add(question)
+    db.session.commit()
+
     return jsonify(parsed_response), 200
 
 
-
 @apis.post('/evaluate-answer')
+@login_required
 def evaluate_answer():
     data = request.get_json()
     question = data["question"]
@@ -78,7 +90,7 @@ def evaluate_answer():
 
     if match is None:
         return jsonify({"error": "Please try again"}), 400
-    
+
     # Extract the data from the matched groups
     outcome = match.group(1).strip()
     feedback = match.group(2).strip()
@@ -90,3 +102,27 @@ def evaluate_answer():
 
     return jsonify(parsed_response), 200
 
+
+@apis.route('/questions')
+@login_required
+def questions():
+
+    user = User.query.filter_by(id=current_user.id).first()
+    questions = user.questions
+
+    # Create a list of dictionaries for each question
+    questions_list = [{'id': question.id, 'question_title': question.question_title,  'question_prompt': question.question_prompt,
+                       'question_code': question.question_code, 'answer_code': question.answer_code, 'answer_explanation': question.answer_explanation} for question in questions]
+
+    return jsonify(questions_list)
+
+
+@apis.route('/question/<id>')
+@login_required
+def question(id):
+
+    question = Question.query.filter_by(id=id).first()
+    question_json = {'id': question.id, 'question_title': question.question_title,  'question_prompt': question.question_prompt,
+                     'question_code': question.question_code, 'answer_code': question.answer_code, 'answer_explanation': question.answer_explanation}
+
+    return jsonify(question_json)
