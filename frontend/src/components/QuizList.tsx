@@ -1,5 +1,8 @@
 import '../styles/QuizList.css';
 import { Container, Row, Col, Button, Dropdown, DropdownButton, ListGroup } from 'react-bootstrap';
+
+import * as matcher from "./matcher.js";
+import { useState } from "react";
 // import { useHistory } from 'react-router-dom';
 
 const QuizPage = () => {
@@ -24,6 +27,40 @@ const QuizPage = () => {
 //     console.log(`Selected topic: ${eventKey}`);
 //     // Logic to update questions based on selected topic
 //   };
+
+ const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  //
+  const handleRegister = 
+  () => {
+    // event.preventDefault(); // Prevent default form submission behavior
+
+    if (password !== confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+
+    try {
+      return fetch(matcher.GEN_QUESTION_LIST, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password1: password,
+          password2: password,
+        }),
+      })
+      .then((response) => response.json());
+    } catch (error) {
+      // Handle error - show message to the user
+    }
+  };
 
   return (
     <Container fluid>

@@ -1,8 +1,43 @@
 import '../styles/Quiz.css';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import * as matcher from "./matcher.js";
+import { useState } from "react";
 
 const QuizQuestionPage = () => {
   // State and functions can be added as needed
+
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleRegister = 
+  () => {
+    // event.preventDefault(); // Prevent default form submission behavior
+
+    if (password !== confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+
+    try {
+      return fetch(matcher.REGISTER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password1: password,
+          password2: password,
+        }),
+      })
+      .then((response) => response.json());
+    } catch (error) {
+      // Handle error - show message to the user
+    }
+  };
 
   return (
     <Container fluid className="quiz-question-page">

@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import * as matcher from "./constants/matcher";
+import { PerformAuthentication } from "./authentication"; // Import the function
+import { useState } from "react";
 
 // Import your Login and Register components
 import Login from "./components/Login";
@@ -10,7 +12,6 @@ import Dashboard from "./components/Dashboard";
 import QuizList from "./components/QuizList";
 import Quiz from "./components/Quiz";
 import QuizAnswer from "./components/QuizAnswer";
-
 
 function App() {
   return (

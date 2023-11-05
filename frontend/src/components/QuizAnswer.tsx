@@ -2,12 +2,46 @@ import React, { useState } from 'react';
 import '../styles/Quiz.css';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 
+import * as matcher from "./matcher.js";
+
 const QuizPage = () => {
   const [submitted, setSubmitted] = useState(true); // Changed to false to start without submission
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleShowAnswer = () => {
     setShowAnswer(true);
+  };
+
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  //
+  const handleRegister = //async (event: any) 
+  () => {
+    // event.preventDefault(); // Prevent default form submission behavior
+
+    if (password !== confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+
+    try {
+      return fetch(matcher.GEN_QUESTION, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: "python",
+          topic: "loop"
+        }),
+      })
+      .then((response) => response.json());
+    } catch (error) {
+      // Handle error - show message to the user
+    }
   };
 
   return (
@@ -55,7 +89,7 @@ const QuizPage = () => {
             <Card.Body>
               <Card.Title>Code Editor</Card.Title>
               <textarea className="code-editor" defaultValue="Type your code here..."></textarea>
-              <Button variant="primary" className="mt-3">Submit</Button> {/* Changed href to onClick */}
+              <Button  onClick={()=>handleRegister()} variant="primary" className="mt-3">Submit</Button> {/* Changed href to onClick */}
             </Card.Body>
           </Card>
         </Col>
