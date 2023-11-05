@@ -1,32 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import * as matcher from "./constants/matcher";
+import { PerformAuthentication } from "./authentication"; // Import the function
+import { useState } from "react";
 
 // Import your Login and Register components
 import Login from "./components/Login";
 import Register from "./components/Register";
-
-function App() {
-  const [count, setCount] = useState(0);
-  // article 
-  // const [articles, setArticles] = useState([]);
-  // Modify the current state by setting the new data to
-  // the response from the backend
-  useEffect(() => {
-    fetch("http://127.0.0.1:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: "john_doe",
-        password: "mysecretpassword",
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      // .then((response) => setArticles(response))
-      .catch((error) => console.log(error));
-  }, []);
+import Dashboard from "./components/Dashboard";
+import QuizList from "./components/QuizList";
+import Quiz from "./components/Quiz";
+import QuizAnswer from "./components/QuizAnswer";
 
 function App() {
   return (
@@ -37,6 +22,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/quizList" element={<QuizList />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/answer" element={<QuizAnswer />} />
       </Routes>
     </Router>
   );

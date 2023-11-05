@@ -1,0 +1,47 @@
+.quiz-question-page .dashboard-header {
+    background-color: #5d5c61;
+    padding: 1rem;
+    color: white;
+  }
+  
+  .quiz-question-page h2 {
+    color: white;
+  }
+  
+  .quiz-question-page .btn-primary {
+    background-color: #4C5BD4; /* Adjust color to match your primary button color */
+    border: none;
+  }
+  
+  .quiz-question-page .main-content {
+    margin-bottom: 2rem;
+  }
+  
+  .quiz-question-page .card {
+    background-color: #f8f9fa;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  
+  .quiz-question-page .code-editor {
+    width: 100%;
+    height: 250px; /* Adjust as needed */
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    padding: 0.5rem;
+    font-family: 'Fira Code', monospace; /* A nice font for code editing */
+    font-size: 1rem;
+  }
+  
+  .quiz-question-page .submit-section {
+    margin-top: 2rem;
+  }
+  
+  .left, .right {
+    height: 80vh;
+  }
+
+
+
+  /* Add more styles as needed */
+  
