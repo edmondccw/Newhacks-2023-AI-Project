@@ -7,9 +7,9 @@ from .. import db
 auth = Blueprint("auth", __name__)
 
 
-@auth.app_context_processor
-def inject_user():
-    return dict(user=current_user)
+# @auth.app_context_processor
+# def inject_user():
+#     return dict(user=current_user)
 
 
 @auth.post("/login")
@@ -66,3 +66,14 @@ def logout():
     logout_user()
     print("Log out success!")
     return jsonify({'message': 'Logout successful'})
+
+
+@auth.route('/is_authenticated', methods=['GET'])
+def is_authenticated():
+    if current_user.is_authenticated:
+        user_data = {
+            'username': current_user.username,
+            'email': current_user.email
+        }
+        return jsonify(user_data)
+    return jsonify({'error': 'User is not authenticated'}), 401

@@ -20,14 +20,15 @@ def create_app():
     # cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
     # Import Blueprints
-    # from .routes.apis import apis
+    from .routes.apis import apis
     from .routes.auth import auth
 
-    # app.register_blueprint(apis, url_prefix="/api")
-    app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(apis, url_prefix="/api")
+    app.register_blueprint(auth, url_prefix="/api")
 
     # Import db models
     from .models.users import User
+    from .models.questions import Question
 
     # Init Database
     db.init_app(app)
