@@ -1,0 +1,57 @@
+/* General styles for spacing and fonts */
+.dashboard-header {
+    background-color: #202123; /* Dark background for the header */
+    color: white; /* White text color */
+  }
+
+.card {
+    margin-bottom: 1rem;
+    border: none;
+    box-shadow: 0 0.46875rem 2.1875rem rgb(8 10 37 / 3%), 0 0.9375rem 1.40625rem rgb(8 10 37 / 3%), 0 0.25rem 0.53125rem rgb(8 10 37 / 5%), 0 0.125rem 0.1875rem rgb(8 10 37 / 3%);
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    color: #4a4a4a;
+  }
+  
+  /* Buttons and interactive elements */
+  .btn-outline-secondary {
+    color: #4a4a4a;
+    border-color: #4a4a4a;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    border-color: #4a4a4a;
+  }
+  
+  .list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Progress Bar */
+  .progress {
+    background-color: #f0f2f5;
+    border-radius: 0.25rem;
+  }
+  
+  .progress-bar {
+    background-color: #4a90e2; /* Use a color that matches the theme */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 0.5rem;
+    }
+  }
+  

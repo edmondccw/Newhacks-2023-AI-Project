@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import '../styles/Quiz.css';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 
 const QuizPage = () => {
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(true); // Changed to false to start without submission
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleShowAnswer = () => {
@@ -10,14 +11,15 @@ const QuizPage = () => {
   };
 
   return (
-    <Container fluid>
+    <Container fluid className="quiz-page">
       {/* Header Section */}
-      <Row className="border-bottom py-3 mb-4">
-        <Col>
-          <h2>Quiz / Question Code</h2>
+      <Row className="border-bottom py-3 mb-4 dashboard-header">
+        <Col md={6}>
+          <h2>AI Mentor</h2>
         </Col>
-        <Col className="text-end">
-          <a href="/dashboard">Dashboard</a> | <a href="/logout">Log Out</a>
+        <Col md={6} className="text-md-end d-flex justify-content-end">
+          <Button variant="primary" href='/dashboard' className="me-2 dashboard-btn">Dashboard</Button>
+          <Button variant="primary" href='/' className="logout-btn">Log Out</Button>
         </Col>
       </Row>
 
@@ -25,7 +27,7 @@ const QuizPage = () => {
       <Row className="g-3">
         <Col md={8}>
           {/* Left Column: Question Prompt */}
-          <Card>
+          <Card className="left">
             <Card.Body>
               <Card.Title>Question Code + Question Title</Card.Title>
               <Card.Text>
@@ -49,19 +51,13 @@ const QuizPage = () => {
         </Col>
         <Col md={4}>
           {/* Right Column: Code Editor */}
-          <Card>
+          <Card className="right">
             <Card.Body>
               <Card.Title>Code Editor</Card.Title>
-              <textarea className="code-editor" style={{ width: '100%', height: '250px' }} defaultValue="Type your code here..."></textarea>
+              <textarea className="code-editor" defaultValue="Type your code here..."></textarea>
+              <Button variant="primary" className="mt-3">Submit</Button> {/* Changed href to onClick */}
             </Card.Body>
           </Card>
-        </Col>
-      </Row>
-
-      {/* Footer: Submit Button */}
-      <Row className="mt-4">
-        <Col className="text-center">
-          <Button variant="primary">Submit</Button>
         </Col>
       </Row>
     </Container>

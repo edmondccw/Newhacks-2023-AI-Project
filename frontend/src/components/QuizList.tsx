@@ -1,3 +1,4 @@
+import '../styles/QuizList.css';
 import { Container, Row, Col, Button, Dropdown, DropdownButton, ListGroup } from 'react-bootstrap';
 // import { useHistory } from 'react-router-dom';
 
@@ -27,14 +28,14 @@ const QuizPage = () => {
   return (
     <Container fluid>
       {/* Header Section */}
-      <Row className="border-bottom py-3 mb-4 align-items-center">
+      <Row className="border-bottom py-3 mb-4 dashboard-header">
         <Col md={6}>
-          <h2>Quiz Application</h2>
+          <h2>AI Mentor</h2>
         </Col>
-        {/* <Col md={6} className="text-md-end">
-          <Button variant="secondary" onClick={handleDashboard} className="me-2">Dashboard</Button>
-          <Button variant="secondary" onClick={handleLogout}>Log Out</Button>
-        </Col> */}
+        <Col md={6} className="text-md-end d-flex justify-content-end">
+          <Button variant="primary" href='/dashboard' className="me-2">Dashboard</Button>
+          <Button variant="primary" href='/'>Log Out</Button>
+        </Col>
       </Row>
 
       {/* Main Content Area */}
@@ -64,7 +65,7 @@ const QuizPage = () => {
       {/* Question List Section */}
       <Row>
         <Col>
-          <h4>Questions</h4>
+          <h4 className="subtit">Questions</h4>
           <ListGroup>
             {/* Questions will be dynamically inserted here based on the selections above */}
             {/* This is a placeholder for empty state */}

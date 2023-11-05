@@ -1,0 +1,71 @@
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  /* Header styles */
+  .dashboard-header {
+    background-color: #5d5c61;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #7395ae;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 8px;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #557a95;
+  }
+  
+  /* Dropdown styles */
+  #dropdown-language-button,
+  #dropdown-topic-button {
+    background-color: #4d4c7d;
+    border: none;
+    color: white;
+  }
+  
+  .dropdown-item {
+    color: #333;
+  }
+  
+  /* Dropdown hover styles */
+  .dropdown-item:hover {
+    background-color: #4d4c7d;
+    color: white;
+  }
+  
+  /* Main content area styles */
+  .subtit {
+    color: #fff;
+  }
+
+  .question-list {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* List group styles */
+  .list-group-item {
+    border: none;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list-group-item:hover {
+    background-color: #eaeaea;
+  }
+  

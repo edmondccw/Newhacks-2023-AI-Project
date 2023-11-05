@@ -1,21 +1,19 @@
+import '../styles/Dashboard.css';
 import { Container, Row, Col, Card, Button, ProgressBar, ListGroup, Badge, Modal, Form } from 'react-bootstrap';
-
 
 const Dashboard = () => {
     
   return (
     <Container fluid>
       {/* Dashboard Header */}
-      <Row className="border-bottom py-3 mb-4">
+      <Row className="border-bottom py-3 mb-4 dashboard-header">
         <Col md={6}>
-          <h2>Student Dashboard</h2>
+          <h2>AI Mentor</h2>
         </Col>
-        <Col md={6} className="text-md-end">
-          <Button variant="primary" href='/QuizList'>Start Quiz!</Button>
+        <Col md={6} className="text-md-end d-flex justify-content-end">
+          <Button variant="primary" href='/QuizList' className="me-2">Start Quiz!</Button>
+          <Button variant="primary" href='/'>Log Out</Button>
         </Col>
-        {/* <Col md={6} className="text-md-end">
-          <Button variant="primary" href='/logout'>Log Out</Button>
-        </Col> */}
       </Row>
 
       {/* Dashboard Widgets */}
@@ -36,7 +34,7 @@ const Dashboard = () => {
 
         {/* Recent Activity Widget */}
         <Col md={4}>
-          <Card>
+          <Card className="h-100">
             <Card.Body>
               <Card.Title>Recent Activity</Card.Title>
               <ListGroup variant="flush">
