@@ -28,6 +28,7 @@ def create_app():
 
     # Import db models
     from .models.users import User
+    from .models.questions import Question
 
     # Init Database
     db.init_app(app)
