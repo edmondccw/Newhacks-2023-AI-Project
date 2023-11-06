@@ -41,6 +41,9 @@
     height: 80vh;
   }
 
+  .wrongMsg{
+    color: red;
+  }
 
 
   /* Add more styles as needed */

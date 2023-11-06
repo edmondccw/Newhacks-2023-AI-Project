@@ -80,7 +80,7 @@ function Register() {
               <MDBInput 
               value={confirmPassword} onChange={handleCP}
               wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Confirm Password' id='formControlPassword2' type='password' size="lg" minLength="6"/>
-              <MDBBtn onClick={()=>handleRegister()}outline className='mx-2 px-5' color='white' size='lg'>
+              <MDBBtn onClick={()=>handleRegister()}outline className='mx-2 px-5' color='white' size='lg' href='/'>
                 Register
               </MDBBtn>
               

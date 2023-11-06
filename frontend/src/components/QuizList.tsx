@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Dropdown, DropdownButton, ListGroup } from
 
 import * as matcher from "./matcher.js";
 import { useState } from "react";
+import { MDBBtn } from 'mdb-react-ui-kit';
 // import { useHistory } from 'react-router-dom';
 
 const QuizPage = () => {
@@ -67,7 +68,7 @@ const QuizPage = () => {
       {/* Header Section */}
       <Row className="border-bottom py-3 mb-4 dashboard-header">
         <Col md={6}>
-          <h2>AI Mentor</h2>
+          <h2>CodeGenius</h2>
         </Col>
         <Col md={6} className="text-md-end d-flex justify-content-end">
           <Button variant="primary" href='/dashboard' className="me-2">Dashboard</Button>
@@ -107,6 +108,7 @@ const QuizPage = () => {
             {/* Questions will be dynamically inserted here based on the selections above */}
             {/* This is a placeholder for empty state */}
             <ListGroup.Item>No questions attempted yet. Select a language and topic to start.</ListGroup.Item>
+            <MDBBtn href="/quiz">New Question</MDBBtn>
           </ListGroup>
         </Col>
       </Row>

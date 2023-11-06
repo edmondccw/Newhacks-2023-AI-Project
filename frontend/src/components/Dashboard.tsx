@@ -8,7 +8,7 @@ const Dashboard = () => {
       {/* Dashboard Header */}
       <Row className="border-bottom py-3 mb-4 dashboard-header">
         <Col md={6}>
-          <h2>AI Mentor</h2>
+          <h2>CodeGenius</h2>
         </Col>
         <Col md={6} className="text-md-end d-flex justify-content-end">
           <Button variant="primary" href='/QuizList' className="me-2">Start Quiz!</Button>
@@ -26,7 +26,7 @@ const Dashboard = () => {
               <Card.Text>
                 Keep track of your tasks and manage your time effectively.
               </Card.Text>
-              <ProgressBar now={75} label={`${75}%`} />
+              <ProgressBar now={0} label={`${0}%`} />
               <Button variant="outline-secondary" size="sm" className="mt-3">View Details</Button>
             </Card.Body>
           </Card>

@@ -49,7 +49,7 @@ const QuizPage = () => {
       {/* Header Section */}
       <Row className="border-bottom py-3 mb-4 dashboard-header">
         <Col md={6}>
-          <h2>AI Mentor</h2>
+          <h2>CodeGenius</h2>
         </Col>
         <Col md={6} className="text-md-end d-flex justify-content-end">
           <Button variant="primary" href='/dashboard' className="me-2 dashboard-btn">Dashboard</Button>
@@ -63,17 +63,36 @@ const QuizPage = () => {
           {/* Left Column: Question Prompt */}
           <Card className="left">
             <Card.Body>
-              <Card.Title>Question Code + Question Title</Card.Title>
+              <Card.Title>Q1 Python Array</Card.Title>
               <Card.Text>
                 {/* The actual question prompt goes here */}
-                Question Prompt...
+                Write a Python program to create an array of 5 integers and display the array items. Access individual elements through indexes.
+                Sample Output:
+                1
+                3
+                5
+                7
+                9
+                Access first three items individually
+                1
+                3
+                5
               </Card.Text>
               {submitted && (
                 <div>
                   {showAnswer ? (
                     <Card.Text>
                       {/* The actual answer goes here */}
-                      Answer to the question...
+                    Sample Solution:
+
+                    from array import *
+                    array_num = array('i', [1,3,5,7,9])
+                    for i in array_num:
+                    print(i)
+                    print("Access first three items individually")
+                    print(array_num[0])
+                    print(array_num[1])
+                    print(array_num[2])
                     </Card.Text>
                   ) : (
                     <Button onClick={handleShowAnswer}>Display Answer</Button>
@@ -90,6 +109,7 @@ const QuizPage = () => {
               <Card.Title>Code Editor</Card.Title>
               <textarea className="code-editor" defaultValue="Type your code here..."></textarea>
               <Button  onClick={()=>handleRegister()} variant="primary" className="mt-3">Submit</Button> {/* Changed href to onClick */}
+              <Card.Title className="wrongMsg">Incorrect Answer!</Card.Title>
             </Card.Body>
           </Card>
         </Col>

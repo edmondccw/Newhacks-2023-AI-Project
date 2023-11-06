@@ -44,7 +44,7 @@ const QuizQuestionPage = () => {
       {/* Header Section */}
       <Row className="dashboard-header">
         <Col md={6}>
-          <h2>AI Mentor</h2>
+          <h2>CodeGenius</h2>
         </Col>
         <Col md={6} className="text-md-end d-flex justify-content-end">
           <Button variant="primary" href='/dashboard' className="me-2">Dashboard</Button>
@@ -58,9 +58,19 @@ const QuizQuestionPage = () => {
           {/* Left Column: Question Prompt */}
           <Card className="left"> {/* Changed the class to lowercase */}
             <Card.Body>
-              <Card.Title>Question code + Question title</Card.Title>
+              <Card.Title>Q1 Python Array</Card.Title>
               <Card.Text>
-                Question Prompt...
+              Write a Python program to create an array of 5 integers and display the array items. Access individual elements through indexes.
+                Sample Output:
+                1
+                3
+                5
+                7
+                9
+                Access first three items individually
+                1
+                3
+                5
                 {/* The actual question prompt goes here */}
               </Card.Text>
             </Card.Body>
