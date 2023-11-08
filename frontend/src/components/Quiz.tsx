@@ -1,39 +1,42 @@
-import '../styles/Quiz.css';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import * as matcher from "./matcher.js";
+import "../styles/Quiz.css";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import * as matcher from "./constants/matcher.js";
 import { useState } from "react";
 
 const QuizQuestionPage = () => {
   // State and functions can be added as needed
 
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [submitted, setSubmitted] = useState(true); // Changed to false to start without submission
+  const [question, setQuestion] = useState("");
+  const [correct_answer, setCorrect_answer] = useState("");
+  const [user_answer, setUser_answer] = useState("");
 
-  const handleRegister = 
-  () => {
-    // event.preventDefault(); // Prevent default form submission behavior
+  const handleTextareaChange = (e) => {
+    // Update the state with the current textarea value
+    setUser_answer(e.target.value);
+  };
 
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+  const handleSubmit = () => {
+    // Prevent default form submission behavior
+    // e.preventDefault();
+    if (user_answer === "") {
+      alert("Please write your answer");
       return;
     }
 
     try {
-      return fetch(matcher.REGISTER_URL, {
+      console.log("user_answer=" + user_answer);
+      return fetch(matcher.EVALUATE_ANSWER, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
-          email: email,
-          password1: password,
-          password2: password,
+          question: question,
+          correct_answer: correct_answer,
+          user_answer: user_answer,
         }),
-      })
-      .then((response) => response.json());
+      }).then((response) => response.json());
     } catch (error) {
       // Handle error - show message to the user
     }
@@ -47,8 +50,12 @@ const QuizQuestionPage = () => {
           <h2>AI Mentor</h2>
         </Col>
         <Col md={6} className="text-md-end d-flex justify-content-end">
-          <Button variant="primary" href='/dashboard' className="me-2">Dashboard</Button>
-          <Button variant="primary" href='/'>Log Out</Button>
+          <Button variant="primary" href="/dashboard" className="me-2">
+            Dashboard
+          </Button>
+          <Button variant="primary" href="/">
+            Log Out
+          </Button>
         </Col>
       </Row>
 
@@ -56,7 +63,9 @@ const QuizQuestionPage = () => {
       <Row className="g-3 main-content">
         <Col md={8}>
           {/* Left Column: Question Prompt */}
-          <Card className="left"> {/* Changed the class to lowercase */}
+          <Card className="left">
+            {" "}
+            {/* Changed the class to lowercase */}
             <Card.Body>
               <Card.Title>Question code + Question title</Card.Title>
               <Card.Text>
@@ -71,9 +80,23 @@ const QuizQuestionPage = () => {
           <Card className="right">
             <Card.Body>
               <Card.Title>Code Editor</Card.Title>
-              <textarea className="code-editor" defaultValue="Type your code here..."></textarea>
+              <textarea
+                value={user_answer} // Bind the value to the state variable
+                onChange={handleTextareaChange} // Call the function on change
+                className="code-editor"
+                defaultValue="Type your code here..."
+              ></textarea>
               {/* Moved the submit button here for better workflow */}
-              <Button variant="primary" type="submit" href='/answer' className="mt-3">Submit</Button> {/* Added mt-3 for spacing */}
+              <Button
+                onClick={() => handleSubmit()}
+                variant="primary"
+                type="submit"
+                href="/answer"
+                className="mt-3"
+              >
+                Submit
+              </Button>{" "}
+              {/* Added mt-3 for spacing */}
             </Card.Body>
           </Card>
         </Col>

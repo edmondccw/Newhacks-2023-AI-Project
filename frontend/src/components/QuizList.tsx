@@ -1,64 +1,117 @@
-import '../styles/QuizList.css';
-import { Container, Row, Col, Button, Dropdown, DropdownButton, ListGroup } from 'react-bootstrap';
-
-import * as matcher from "./matcher.js";
+import "../styles/QuizList.css";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Dropdown,
+  DropdownButton,
+  ListGroup,
+} from "react-bootstrap";
+import * as matcher from "./constants/matcher.js";
 import { useState } from "react";
-// import { useHistory } from 'react-router-dom';
 
 const QuizPage = () => {
-//   const history = useHistory();
-//   const handleLogout = () => {
-//     // Add your logout logic here
-//     console.log('Logging out...'); // Placeholder for actual logout logic
-//     // Redirect to login page or perform other logout actions
-//   };
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState("");
+  const [question_title, setQuestion_title] = useState("");
+  const [question_prompt, setQuestion_prompt] = useState("");
+  const [question_code, setQuestion_code] = useState("");
+  const [answer_code, setAnswer_code] = useState("");
+  const [answer_explanation, setAnswer_explanation] = useState("");
+  const [user_id, setUser_id] = useState("");
 
-//   const handleDashboard = () => {
-//     history.push('/dashboard'); // Redirect to dashboard
-//   };
-
-//   // Placeholder functions for dropdowns
-//   const handleLanguageSelect = (eventKey) => {
-//     console.log(`Selected programming language: ${eventKey}`);
-//     // Logic to update questions based on selected language
-//   };
-
-//   const handleTopicSelect = (eventKey) => {
-//     console.log(`Selected topic: ${eventKey}`);
-//     // Logic to update questions based on selected topic
-//   };
-
- const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  //
-  const handleRegister = 
-  () => {
-    // event.preventDefault(); // Prevent default form submission behavior
-
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
-      return;
+  const handleLanguageSelect = (e) => {
+    setSelectedLanguage(e);
+    console.log(`Selected language: ${e}`);
+    if (selectedTopic === undefined && selectedLanguage === undefined) {
+      alert("Please choose topic and language");
+    } else {
+      try {
+        let errorMsg = "";
+        return fetch(matcher.GEN_QUESTION, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            language: selectedLanguage,
+            topic: selectedTopic,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              errorMsg = "Network response was not ok";
+              alert(errorMsg);
+              throw new Error(errorMsg);
+            }
+            if (
+              !response.headers
+                .get("content-type")
+                ?.includes("application/json")
+            ) {
+              errorMsg = "Response is not in JSON format";
+              alert(errorMsg);
+              throw new Error(errorMsg);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Handle the JSON data
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Handle the error appropriately
+          });
+      } catch (error) {}
     }
+  };
 
-    try {
-      return fetch(matcher.GEN_QUESTION_LIST, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password1: password,
-          password2: password,
-        }),
-      })
-      .then((response) => response.json());
-    } catch (error) {
-      // Handle error - show message to the user
+  const handleTopicSelect = (e) => {
+    setSelectedTopic(e);
+    console.log(`Selected topic: ${e}`);
+    if (selectedTopic === undefined && selectedLanguage === undefined) {
+      alert("Please choose topic and language");
+    } else {
+      try {
+        return fetch(matcher.GEN_QUESTION, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            language: selectedLanguage,
+            topic: selectedTopic,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            if (
+              !response.headers
+                .get("content-type")
+                ?.includes("application/json")
+            ) {
+              throw new Error("Response is not in JSON format");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setQuestion_title(data["question_title"]);
+            setQuestion_prompt(data["question_prompt"]);
+            setQuestion_code(data["question_code"]);
+            setAnswer_code(data["answer_code"]);
+            setAnswer_explanation(data["answer_explanation"]);
+            setUser_id(data["user_id"]);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Handle the error appropriately
+          });
+      } catch (error) {}
     }
   };
 
@@ -70,8 +123,12 @@ const QuizPage = () => {
           <h2>AI Mentor</h2>
         </Col>
         <Col md={6} className="text-md-end d-flex justify-content-end">
-          <Button variant="primary" href='/dashboard' className="me-2">Dashboard</Button>
-          <Button variant="primary" href='/'>Log Out</Button>
+          <Button variant="primary" href="/dashboard" className="me-2">
+            Dashboard
+          </Button>
+          <Button variant="primary" href="/">
+            Log Out
+          </Button>
         </Col>
       </Row>
 
@@ -79,8 +136,11 @@ const QuizPage = () => {
       <Row className="mb-4">
         <Col md={6}>
           {/* Program Language Dropdown */}
-          <DropdownButton id="dropdown-language-button" title="Select Language" >
-          {/* onSelect={handleLanguageSelect} */}
+          <DropdownButton
+            id="dropdown-language-button"
+            title="Select Language"
+            onSelect={handleLanguageSelect}
+          >
             <Dropdown.Item eventKey="JavaScript">JavaScript</Dropdown.Item>
             <Dropdown.Item eventKey="Python">Python</Dropdown.Item>
             <Dropdown.Item eventKey="Java">Java</Dropdown.Item>
@@ -89,12 +149,14 @@ const QuizPage = () => {
         </Col>
         <Col md={6}>
           {/* Topic Dropdown */}
-          <DropdownButton id="dropdown-topic-button" title="Select Topic" > 
-          {/* onSelect={handleTopicSelect} */}
+          <DropdownButton
+            id="dropdown-topic-button"
+            title="Select Topic"
+            onSelect={handleTopicSelect}
+          >
             <Dropdown.Item eventKey="Variables">Variables</Dropdown.Item>
-            <Dropdown.Item eventKey="Functions">Functions</Dropdown.Item>
+            <Dropdown.Item eventKey="list">List</Dropdown.Item>
             <Dropdown.Item eventKey="Objects">Objects</Dropdown.Item>
-            {/* More topics can be added here */}
           </DropdownButton>
         </Col>
       </Row>
@@ -106,7 +168,9 @@ const QuizPage = () => {
           <ListGroup>
             {/* Questions will be dynamically inserted here based on the selections above */}
             {/* This is a placeholder for empty state */}
-            <ListGroup.Item>No questions attempted yet. Select a language and topic to start.</ListGroup.Item>
+            <ListGroup.Item>
+              No questions attempted yet. Select a language and topic to start.
+            </ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>
