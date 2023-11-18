@@ -8,111 +8,46 @@ import {
   DropdownButton,
   ListGroup,
 } from "react-bootstrap";
-import * as matcher from "./constants/matcher.js";
+import * as matcher from "./constants/matcher.ts";
 import { useState } from "react";
+import { PerformQuiz } from "./Quiz"; // Import the function
 
 const QuizPage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
-  const [question_title, setQuestion_title] = useState("");
-  const [question_prompt, setQuestion_prompt] = useState("");
-  const [question_code, setQuestion_code] = useState("");
-  const [answer_code, setAnswer_code] = useState("");
-  const [answer_explanation, setAnswer_explanation] = useState("");
-  const [user_id, setUser_id] = useState("");
+  const [testList, setTestList] = useState([]);
 
-  const handleLanguageSelect = (e) => {
+  const handleLanguageSelect = async (e) => {
+    // e.preventDefault();
     setSelectedLanguage(e);
     console.log(`Selected language: ${e}`);
     if (selectedTopic === undefined && selectedLanguage === undefined) {
       alert("Please choose topic and language");
     } else {
       try {
-        let errorMsg = "";
-        return fetch(matcher.GEN_QUESTION, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            language: selectedLanguage,
-            topic: selectedTopic,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              errorMsg = "Network response was not ok";
-              alert(errorMsg);
-              throw new Error(errorMsg);
-            }
-            if (
-              !response.headers
-                .get("content-type")
-                ?.includes("application/json")
-            ) {
-              errorMsg = "Response is not in JSON format";
-              alert(errorMsg);
-              throw new Error(errorMsg);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            // Handle the JSON data
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            // Handle the error appropriately
-          });
+        // TODO: POST TO GET QUIZLET by matcher.GEN_QUESTION
+        testQuizList();
       } catch (error) {}
     }
   };
 
-  const handleTopicSelect = (e) => {
+  const handleTopicSelect = async (e) => {
+    // e.preventDefault();
     setSelectedTopic(e);
     console.log(`Selected topic: ${e}`);
     if (selectedTopic === undefined && selectedLanguage === undefined) {
       alert("Please choose topic and language");
     } else {
       try {
-        return fetch(matcher.GEN_QUESTION, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            language: selectedLanguage,
-            topic: selectedTopic,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            if (
-              !response.headers
-                .get("content-type")
-                ?.includes("application/json")
-            ) {
-              throw new Error("Response is not in JSON format");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data);
-            setQuestion_title(data["question_title"]);
-            setQuestion_prompt(data["question_prompt"]);
-            setQuestion_code(data["question_code"]);
-            setAnswer_code(data["answer_code"]);
-            setAnswer_explanation(data["answer_explanation"]);
-            setUser_id(data["user_id"]);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            // Handle the error appropriately
-          });
+        // TODO: POST TO GET QUIZLET by matcher.GEN_QUESTION
+        testQuizList();
       } catch (error) {}
     }
+  };
+
+  const handleQuiz = (id: string) => {
+    console.log(id);
+    PerformQuiz(id);
   };
 
   return (
@@ -148,7 +83,6 @@ const QuizPage = () => {
           </DropdownButton>
         </Col>
         <Col md={6}>
-          {/* Topic Dropdown */}
           <DropdownButton
             id="dropdown-topic-button"
             title="Select Topic"
@@ -166,16 +100,48 @@ const QuizPage = () => {
         <Col>
           <h4 className="subtit">Questions</h4>
           <ListGroup>
-            {/* Questions will be dynamically inserted here based on the selections above */}
-            {/* This is a placeholder for empty state */}
-            <ListGroup.Item>
-              No questions attempted yet. Select a language and topic to start.
-            </ListGroup.Item>
+            {/* TODO: click to QUIZ */}
+            {testList.map((t) => (
+              <ListGroup.Item key={t.id} onClick={() => handleQuiz(t.id)}>
+                {t.question_title}
+              </ListGroup.Item>
+            ))}
           </ListGroup>
         </Col>
       </Row>
     </Container>
   );
+
+  function testQuizList() {
+    const resDataList = [
+      {
+        answer_code:
+          '# input string\n    s = input("Enter a string: ")\n\n    # initialize a variable to store the vowel count\n    vowel_count = 0\n\n    # write a for loop to iterate over the characters of s\n    for c in s:\n\n        # write a condition to check if the character is a vowel\n        if c in "aeiou":\n\n            # increment the vowel count by 1\n            vowel_count += 1\n\n    # print the vowel count\n    print("The number of vowels in", s, "is", vowel_count)',
+        answer_explanation:
+          'The answer code works as follows:\n\n- The first line asks the user to enter a string and assigns it to the variable `s`.\n- The second line initializes a variable `vowel_count` to store the number of vowels in the string. It is initially set to 0.\n- The third line starts a for loop that iterates over each character `c` in the string `s`.\n- The fourth line checks if the character `c` is a vowel by using the `in` operator. The string `"aeiou"` contains all the vowels in lowercase, so if `c` is one of them, the condition is true.\n- The fifth line increments the `vowel_count` by 1 if the condition is true. This can be done by using the `+=` operator, which is equivalent to `vowel_count = vowel_count + 1`.\n- The sixth line ends the for loop after all the characters in `s` are processed.\n- The seventh line prints the final value of `vowel_count` along with the input string `s`.',
+        id: 1,
+        question_code:
+          '# input string\n    s = input("Enter a string: ")\n\n    # initialize a variable to store the vowel count\n    vowel_count = 0\n\n    # write a for loop to iterate over the characters of s\n\n        # write a condition to check if the character is a vowel\n\n            # increment the vowel count by 1\n\n    # print the vowel count\n    print("The number of vowels in", s, "is", vowel_count)',
+        question_prompt:
+          "Write a python program that takes a string as input and counts the number of vowels (a, e, i, o, u) in it. Use a for loop to iterate over the characters of the string. You can assume that the input string is in lowercase.",
+        question_title: "Counting the number of vowels in a string_1",
+      },
+      {
+        answer_code:
+          'def count_vowels(s):\n        # initialize a variable to store the vowel count\n        vowel_count = 0\n        \n        # write a for loop to iterate over the characters in s\n        for char in s:\n            # check if the character is a vowel\n            if char in "aeiou":\n                # increment the vowel count by 1\n                vowel_count += 1\n        \n        # return the vowel count\n        return vowel_count',
+        answer_explanation:
+          '- The function count_vowels takes a string s as an input and returns the number of vowels in that string.\n- The variable vowel_count is initialized to 0 and will store the final vowel count.\n- The for loop iterates over each character in the string s using the syntax `for char in s:`.\n- Inside the loop, the if statement checks if the current character is a vowel by using the membership operator `in` and the string "aeiou" which contains all the vowels.\n- If the character is a vowel, the vowel count is incremented by 1 using the assignment operator `+=`.\n- After the loop ends, the vowel count is returned using the return statement.',
+        id: 2,
+        question_code:
+          "def count_vowels(s):\n        # initialize a variable to store the vowel count\n        vowel_count = 0\n        \n        # write a for loop to iterate over the characters in s\n        # TODO: complete the for loop\n        \n        # return the vowel count\n        return vowel_count",
+        question_prompt:
+          "Write a function that takes a string as an input and returns the number of vowels (a, e, i, o, u) in that string. You can assume that the input string is lowercase and does not contain any punctuation marks. Use a for loop to iterate over the characters in the string.\nquestion_code:\n\nPossible",
+        question_title: "LeetCode_Classic interview",
+      },
+    ];
+    setTestList(resDataList);
+    return testList;
+  }
 };
 
 export default QuizPage;
